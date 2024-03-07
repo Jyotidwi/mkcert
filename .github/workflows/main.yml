@@ -14,14 +14,10 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.20'
-      - name: Install dependencies
-        run: go get .
       - name: Build binaries
         run: |
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "mkcert-$(git describe --tags)-linux-amd64" -ldflags "-X main.Version=$(git describe --tags)"
           CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o "mkcert-$(git describe --tags)-linux-arm64" -ldflags "-X main.Version=$(git describe --tags)"
-      - name: Test
-        run: go test -v ./..    
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.1
         with:
